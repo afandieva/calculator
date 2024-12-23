@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <cctype>
 
-bool validateExpression(const std::string& input) {
+bool validExpr(const std::string& input) {
     for (char c : input) {
         if (!(std::isdigit(c) || c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == '.' || c == ' ')) {
             return false;
@@ -13,11 +13,11 @@ bool validateExpression(const std::string& input) {
     return true;
 }
 
-bool validateOperator(char c) {
+bool isOp(char c) {
     return c == '+' || c == '-' || c == '*' || c == '/' || c == '^';
 }
 
-double performOperation(double a, double b, char op) {
+double operate(double a, double b, char op) {
     switch (op) {
         case '+': return a + b;
         case '-': return a - b;
@@ -32,60 +32,60 @@ double performOperation(double a, double b, char op) {
     }
 }
 
-double calculate(const std::string& expression) {
-    std::vector<double> numbers;
-    std::vector<char> operators;
-    std::string currentNumber;
+double calc(const std::string& expr) {
+    std::vector<double> nums;
+    std::vector<char> ops;
+    std::string currNum;
 
-    for (char currentChar : expression) {
-        if (std::isdigit(currentChar) || currentChar == '.') {
-            currentNumber += currentChar;
+    for (char c : expr) {
+        if (std::isdigit(c) || c == '.') {
+            currNum += c;
         } else {
-            if (!currentNumber.empty()) {
-                numbers.push_back(std::stod(currentNumber));
-                currentNumber.clear();
+            if (!currNum.empty()) {
+                nums.push_back(std::stod(currNum));
+                currNum.clear();
             }
 
-            if (validateOperator(currentChar)) {
-                operators.push_back(currentChar);
-            } else if (!std::isspace(currentChar)) {
+            if (isOp(c)) {
+                ops.push_back(c);
+            } else if (!std::isspace(c)) {
                 throw std::invalid_argument("Invalid character in expression");
             }
         }
     }
 
-    if (!currentNumber.empty()) {
-        numbers.push_back(std::stod(currentNumber));
+    if (!currNum.empty()) {
+        nums.push_back(std::stod(currNum));
     }
 
-    if (numbers.size() != operators.size() + 1) {
+    if (nums.size() != ops.size() + 1) {
         throw std::invalid_argument("Mismatched numbers and operators");
     }
 
-    for (size_t i = 0; i < operators.size(); ++i) {
-        if (operators[i] == '^') {
-            numbers[i] = performOperation(numbers[i], numbers[i + 1], operators[i]);
-            numbers.erase(numbers.begin() + i + 1);
-            operators.erase(operators.begin() + i);
+    for (size_t i = 0; i < ops.size(); ++i) {
+        if (ops[i] == '^') {
+            nums[i] = operate(nums[i], nums[i + 1], ops[i]);
+            nums.erase(nums.begin() + i + 1);
+            ops.erase(ops.begin() + i);
             --i;
         }
     }
 
-    for (size_t i = 0; i < operators.size(); ++i) {
-        if (operators[i] == '*' || operators[i] == '/') {
-            numbers[i] = performOperation(numbers[i], numbers[i + 1], operators[i]);
-            numbers.erase(numbers.begin() + i + 1);
-            operators.erase(operators.begin() + i);
+    for (size_t i = 0; i < ops.size(); ++i) {
+        if (ops[i] == '*' || ops[i] == '/') {
+            nums[i] = operate(nums[i], nums[i + 1], ops[i]);
+            nums.erase(nums.begin() + i + 1);
+            ops.erase(ops.begin() + i);
             --i;
         }
     }
 
-    for (size_t i = 0; i < operators.size(); ++i) {
-        numbers[i] = performOperation(numbers[i], numbers[i + 1], operators[i]);
-        numbers.erase(numbers.begin() + i + 1);
-        operators.erase(operators.begin() + i);
+    for (size_t i = 0; i < ops.size(); ++i) {
+        nums[i] = operate(nums[i], nums[i + 1], ops[i]);
+        nums.erase(nums.begin() + i + 1);
+        ops.erase(ops.begin() + i);
         --i;
     }
 
-    return numbers[0];
+    return nums[0];
 }
