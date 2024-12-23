@@ -4,9 +4,9 @@
 #include <string>
 #include <stdexcept>
 
-double calculate(const std::string& expression);
-bool validateExpression(const std::string& input);
-bool validateOperator(char c);
-double performOperation(double a, double b, char op);
+double calc(const std::string& expr);
+bool validExpr(const std::string& input);
+bool isOp(char c);
+double operate(double a, double b, char op);
 
 #endif // CALC_H
