@@ -1,39 +1,47 @@
-# Simple Calculator
+# Простой калькулятор
 
-This project implements a basic calculator capable of evaluating mathematical expressions with support for the following operations:
+Этот проект реализует базовый калькулятор, способный вычислять математические выражения с поддержкой следующих операций:
 
-- Addition (`+`)
-- Subtraction (`-`)
-- Multiplication (`*`)
-- Division (`/`)
-- Exponentiation (`^`)
+- Сложение (`+`)
+- Вычитание (`-`)
+- Умножение (`*`)
+- Деление (`/`)
+- Возведение в степень (`^`)
 
-The calculator includes validation for input expressions and error handling for invalid inputs or operations (e.g., division by zero).
+Калькулятор включает проверку входных выражений и обработку ошибок для недопустимых входных данных или операций (например, деление на ноль).
 
-## Features
+## Возможности
 
-1. **Validation of Expressions:** Ensures that the input contains only valid characters and operators.
-2. **Evaluation of Expressions:** Parses and calculates results using operator precedence.
-3. **Error Handling:** Handles invalid inputs, malformed expressions, and mathematical errors.
+1. **Проверка выражений:** Убедитесь, что входные данные содержат только допустимые символы и операторы.
+2. **Вычисление выражений:** Разбор и вычисление результатов с учетом приоритетов операторов.
+3. **Обработка ошибок:** Обрабатывает недопустимые входные данные, некорректные выражения и математические ошибки.
 
-## Files
+## Файлы
 
 1. **calc.h**
-   - Header file declaring the calculator's functions.
+   - Заголовочный файл, объявляющий функции калькулятора.
 
 2. **main.cpp**
-   - Entry point for the program. Reads user input, evaluates expressions, and displays results.
+   - Точка входа в программу. Считывает пользовательский ввод, вычисляет выражения и отображает результаты.
 
 3. **calc.cpp**
-   - Implements the core functionality, including expression validation, parsing, and calculation.
+   - Реализует основную функциональность, включая проверку выражений, разбор и вычисление.
 
 4. **tests.cpp**
-   - Includes unit tests for validation and calculation functions.
+   - Содержит модульные тесты для проверки функций валидации и вычислений.
 
-## How to Use
+## Пример
+Запустите программу и введите математические выражения, когда будет предложено. Пример сеанса:
+Введите выражение (или напишите 'stop' для выхода):: 3 + 2 * 2
+7
 
-1. Clone the repository:
+Введите выражение: stop
 
-   ```bash
-   git clone https://github.com/username/simple-calculator.git
-   cd simple-calculator
+
+## Модульные тесты
+
+Проект включает модульные тесты для проверки валидации, операторных функций и вычислений:
+
+- Проверка корректных и некорректных выражений.
+- Тестирование крайних случаев, таких как деление на ноль и пустой ввод.
+- Проверка корректной реализации приоритетов операторов.
