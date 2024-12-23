@@ -30,19 +30,18 @@
 4. **tests.cpp**
    - Содержит модульные тесты для проверки функций валидации и вычислений.
 
-## Example
-
-Run the program and input mathematical expressions when prompted. Example session:
-
-bash
-Enter expression: 3 + 2 * 2
-Result: 7
-
-Enter expression: 10 / 2 + 5 ^ 2
-Result: 27.5
-
-Enter expression: stop
-Goodbye!
+   
+### Примеры выражений
+- Корректные:
+- ```bash
+    5*57
+    7.8-4.5
+    3.4^4
+    6--9 — вычитание отрицательного числа.
+- Некорректные:
+- ```bash
+     llll_k
+     8+++9
 
 ## Модульные тесты
 
