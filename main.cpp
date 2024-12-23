@@ -4,25 +4,25 @@
 #include "calc.h"
 
 int main() {
-    std::string expression;
+    std::string expr;
 
     while (true) {
         std::cout << "Введите выражение (или напишите 'stop' для выхода): ";
-        std::getline(std::cin, expression);
+        std::getline(std::cin, expr);
 
-        if (expression == "stop") {
+        if (expr == "stop") {
             break;
         }
 
         try {
-            expression.erase(std::remove_if(expression.begin(), expression.end(), ::isspace), expression.end());
+            expr.erase(std::remove_if(expr.begin(), expr.end(), ::isspace), expr.end());
 
-            if (!validateExpression(expression)) {
+            if (!validExpr(expr)) {
                 throw std::invalid_argument("Некорректное выражение.");
             }
 
-            double result = calculate(expression);
-            std::cout << "Результат: " << result << "\n";
+            double res = calc(expr);
+            std::cout << "Результат: " << res << "\n";
         } catch (const std::exception& e) {
             std::cerr << "Ошибка: " << e.what() << "\n";
         }
@@ -30,5 +30,3 @@ int main() {
 
     return 0;
 }
-
-
