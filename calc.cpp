@@ -4,9 +4,10 @@
 #include <algorithm>
 #include <cctype>
 
+
 bool validExpr(const std::string& input) {
     for (char c : input) {
-        if (!(std::isdigit(c) || c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == '.' || c == ' ')) {
+        if (!(std::isdigit(c) || c == '+' || c == '-' || c == '*' || c == '/' || c == '^' || c == '.' || std::isspace(c))) {
             return false;
         }
     }
@@ -16,6 +17,7 @@ bool validExpr(const std::string& input) {
 bool isOp(char c) {
     return c == '+' || c == '-' || c == '*' || c == '/' || c == '^';
 }
+
 
 double operate(double a, double b, char op) {
     switch (op) {
@@ -32,22 +34,28 @@ double operate(double a, double b, char op) {
     }
 }
 
+
 double calc(const std::string& expr) {
     std::vector<double> nums;
     std::vector<char> ops;
     std::string currNum;
 
-    for (char c : expr) {
+    for (size_t i = 0; i < expr.length(); ++i) {
+        char c = expr[i];
+
         if (std::isdigit(c) || c == '.') {
+            currNum += c;  
+        } else if (c == '-' && (i == 0 || isOp(expr[i - 1]) || std::isspace(expr[i - 1]))) {
+            // Обработка отрицательных чисел
             currNum += c;
         } else {
             if (!currNum.empty()) {
-                nums.push_back(std::stod(currNum));
+                nums.push_back(std::stod(currNum));  
                 currNum.clear();
             }
 
             if (isOp(c)) {
-                ops.push_back(c);
+                ops.push_back(c);  
             } else if (!std::isspace(c)) {
                 throw std::invalid_argument("Invalid character in expression");
             }
@@ -55,7 +63,7 @@ double calc(const std::string& expr) {
     }
 
     if (!currNum.empty()) {
-        nums.push_back(std::stod(currNum));
+        nums.push_back(std::stod(currNum));  
     }
 
     if (nums.size() != ops.size() + 1) {
@@ -71,6 +79,7 @@ double calc(const std::string& expr) {
         }
     }
 
+
     for (size_t i = 0; i < ops.size(); ++i) {
         if (ops[i] == '*' || ops[i] == '/') {
             nums[i] = operate(nums[i], nums[i + 1], ops[i]);
@@ -79,6 +88,7 @@ double calc(const std::string& expr) {
             --i;
         }
     }
+
 
     for (size_t i = 0; i < ops.size(); ++i) {
         nums[i] = operate(nums[i], nums[i + 1], ops[i]);
